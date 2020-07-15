@@ -156,6 +156,7 @@ class WebView extends StatefulWidget {
     this.userAgent,
     this.initialMediaPlaybackPolicy =
         AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+    this.allowsLinkPreview = false,
   })  : assert(javascriptMode != null),
         assert(initialMediaPlaybackPolicy != null),
         super(key: key);
@@ -329,6 +330,13 @@ class WebView extends StatefulWidget {
   /// The default policy is [AutoMediaPlaybackPolicy.require_user_action_for_all_media_types].
   final AutoMediaPlaybackPolicy initialMediaPlaybackPolicy;
 
+  /// A boolean value that determines whether pressing on a link displays a preview of thre destination for the link.
+  /// 
+  /// This only works on iOS.
+  /// 
+  /// By default `allowsLinkPreview` is true
+  final bool allowsLinkPreview;
+
   @override
   State<StatefulWidget> createState() => _WebViewState();
 }
@@ -402,6 +410,7 @@ WebSettings _webSettingsFromWidget(WebView widget) {
     hasNavigationDelegate: widget.navigationDelegate != null,
     debuggingEnabled: widget.debuggingEnabled,
     gestureNavigationEnabled: widget.gestureNavigationEnabled,
+    allowsLinkPreview: widget.allowsLinkPreview,
     userAgent: WebSetting<String>.of(widget.userAgent),
   );
 }
